@@ -22,6 +22,9 @@ def write(json):
     con = sqlite3.connect("./token_lists/tokens.db")
     # create cursor to execute database commands
     cur = con.cursor()
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS token (address TEXT PRIMARY KEY, name TEXT, symbol TEXT, decimals INT, chain_id INT);"
+    )
     count = 0
     print("json[tokens] type: ", type(json["tokens"]))
     for token in json["tokens"]:
