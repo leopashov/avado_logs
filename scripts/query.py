@@ -86,10 +86,11 @@ def address_to_token(address, cur):
     )
     try:
         search = search[0][0]
-        print("search = ", search)
-        return search
+        # print("search = ", search)
+        return (search, True)
     except:
-        print("address not in db")
+        # print("address not in db")
+        return (0, False)
 
 
 def main():

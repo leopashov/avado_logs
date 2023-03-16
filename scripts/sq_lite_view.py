@@ -25,9 +25,9 @@ class Query:
 
 def main():
 
-    q = Query("/home/leo/Eth_Dev/avado_queries_no_flask/token_lists/tokens.db")
-    q.printQueryResult("SELECT * FROM token WHERE name LIKE '%bitcoin%'")
-    print(q.queryToDataframe("SELECT * FROM token"))
+    q = Query("/home/leo/Eth_Dev/avado_queries_no_flask/scripts/transactions.db")
+    # q.printQueryResult("SELECT * FROM txsDF")
+    print(q.queryToDataframe("SELECT * FROM txsDF"))
     q.closeConnection()
 
 
