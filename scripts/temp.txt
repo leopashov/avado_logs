@@ -1,0 +1,61 @@
+        # print(address_list)
+        # if token["address"] not in address_list:
+        #     cur.execute(
+        #         "INSERT INTO token(address,name,symbol,decimals,chain_id) VALUES (?,?,?,?,?)",
+        #         (
+        #             token["address"],
+        #             token["name"],
+        #             token["symbol"],
+        #             token["decimals"],
+        #             token["chainId"],
+        #         ),
+        #     )
+        # else:
+        #     print(f"repeated address: ", token["address"])
+
+
+######################
+
+        def write(cur, json, ADDRESS_LIST):
+    count = 0
+
+    for token in json["tokens"]:
+        while count < 3:
+
+            address = cur.execute("SELECT address FROM token")
+            address = cur.fetchone()
+            try:
+                print(f"address: ", address[0])
+                address = address[0]
+                # print(f"address len (from sql): ", len(address))
+            except TypeError:
+                print("sql call returns none")
+            # print(f"address list length: ", len(ADDRESS_LIST))
+            # print(f"address list: ", ADDRESS_LIST)
+
+            if token["address"] in ADDRESS_LIST:
+                print(f"repeated address: ", token["address"])
+            else:
+                if type(address) is not None:
+                    ADDRESS_LIST.append(address)
+                    # print(
+                    #     f"json output: ",
+                    #     token["address"],
+                    #     token["name"],
+                    #     token["symbol"],
+                    #     token["decimals"],
+                    #     token["chainId"],
+                    # )
+                    cur.execute(
+                        "INSERT OR IGNORE INTO token(address,name,symbol,decimals,chain_id) VALUES (?,?,?,?,?)",
+                        (
+                            token["address"],
+                            token["name"],
+                            token["symbol"],
+                            token["decimals"],
+                            token["chainId"],
+                        ),
+                    )
+
+                # print("###########################")
+                count += 1
